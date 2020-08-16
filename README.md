@@ -41,6 +41,10 @@ const Control = ({ value: valueProp }) => {
 };
 ```
 
+##### useControlledState(initialState?: any, { initial?: any })
+
+`useControlledState` has options as a second argument. `initial` from options can be used to set the initial value for the internal controlled state.
+
 ### useListState
 
 Used for a **flat** array.
@@ -64,7 +68,7 @@ const ListComponent = () => {
 
 #### Methods
 
-There are a handful of convenient methods provided by the second argument of `useListState()`
+There are a handful of convenient methods provided by the second argument of `useListState()`.
 
 ##### `.add(data)`
 
@@ -78,34 +82,9 @@ const [items, itemsData] = useListState([...]);
 itemsData.add({ id: 'a' });
 ```
 
-##### `.append(data)`
-
-_Alias: `.add()`_
-
-Adds a new item to the array (at the end).
-
-```js
-const [items, itemsData] = useListState([...]);
-
-itemsData.add({ id: 'a' });
-```
-
 ##### `.find({ at: number, id: any })`
 
 _Alias: `.get()`_
-
-Finds an item from the array, using either an index value (`at`) or an `id`.
-
-```js
-const [items, itemsData] = useListState([...]);
-
-itemsData.find({ id: 'a' });
-itemsData.find({ at: 9 });
-```
-
-##### `.get({ at: number, id: any })`
-
-_Alias: `.find()`_
 
 Finds an item from the array, using either an index value (`at`) or an `id`.
 
@@ -178,19 +157,9 @@ const [items, itemsData] = useListState([...]);
 itemsData.set([{ id: 'a' }]);
 ```
 
-##### `.setState(Array | Function)`
-
-_Alias: `.set()`_
-
-The original React `setState` callback from `useState`.
-
-```js
-const [items, itemsData] = useListState([...]);
-
-itemsData.set([{ id: 'a' }]);
-```
-
 ### useBoolState
+
+Used for a `boolean` state.
 
 ```jsx
 import React from 'react';
@@ -203,7 +172,59 @@ const ListComponent = () => {
 };
 ```
 
+#### Methods
+
+There are a handful of convenient methods provided by the second argument of `useBoolState()`.
+
+##### `.true()`
+
+_Alias: `.truthy()`_
+
+Sets the value to `true`.
+
+```js
+const [value, valueData] = useBoolState(false);
+
+valueData.true();
+```
+
+##### `.false()`
+
+_Alias: `.falsy()`_
+
+Sets the value to `false`.
+
+```js
+const [value, valueData] = useBoolState(true);
+
+valueData.false();
+```
+
+##### `.toggle()`
+
+Toggles the value between `true` and `false`.
+
+```js
+const [value, valueData] = useBoolState(true);
+
+valueData.toggle();
+```
+
+##### `.set(Array | Function)`
+
+_Alias: `.setState()`_
+
+The original React `setState` callback from `useState`.
+
+```js
+const [value, valueData] = useBoolState(false);
+
+valueData.set(true);
+```
+
 ### useLocalState
+
+Used to read/write state to localStorage.
 
 ```jsx
 import React from 'react';
@@ -217,3 +238,7 @@ const ListComponent = () => {
 	);
 };
 ```
+
+##### useLocalState(key: string, state: any)
+
+The `key` will be used as the localState key for your data.
