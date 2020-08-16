@@ -1,6 +1,6 @@
 {
   "name": "use-enhanced-state",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A collection of enhanced useState hooks for React.",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -53,10 +53,10 @@
   },
   "devDependencies": {
     "@itsjonq/zero": "5.0.2",
-    "babel-plugin-dev-expression": "^0.2.2",
     "@testing-library/react": "10.4.8",
     "@types/jest": "24.0.12",
     "@types/react": "16.8.15",
+    "babel-plugin-dev-expression": "^0.2.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
