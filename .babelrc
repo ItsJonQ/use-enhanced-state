@@ -1,1 +1,4 @@
-{ "presets": ["@itsjonq/zero/babel"] }
+{
+	"presets": ["@itsjonq/zero/babel"],
+	"plugins": ["babel-plugin-dev-expression"]
+}

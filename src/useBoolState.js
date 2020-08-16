@@ -1,13 +1,13 @@
 import { is } from '@itsjonq/is';
 import { useState } from 'react';
-import { warning } from 'reakit-warning';
+import warning from 'tiny-warning';
 
 export function useBoolState(initialState = false) {
 	warning(
-		!is.boolean(initialState),
-		'use-enhanced-state',
-		'useBoolState',
-		'State must be a boolean.',
+		is.boolean(initialState),
+		['use-enhanced-state', 'useBoolState', 'State must be a boolean.'].join(
+			'\n',
+		),
 	);
 
 	const [state, setState] = useState(initialState);

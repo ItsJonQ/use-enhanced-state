@@ -1,14 +1,14 @@
 import { is } from '@itsjonq/is';
 import arrayMove from 'array-move';
 import { useState } from 'react';
-import { warning } from 'reakit-warning';
+import warning from 'tiny-warning';
 
 export function useListState(initialState = []) {
 	warning(
-		!is.array(initialState),
-		'use-enhanced-state',
-		'useListState',
-		'State must be an array.',
+		is.array(initialState),
+		['use-enhanced-state', 'useListState', 'State must be an array.'].join(
+			'\n',
+		),
 	);
 
 	const [state, setState] = useState(initialState);
@@ -24,11 +24,13 @@ export function useListState(initialState = []) {
 	const insert = ({ at, item }) => {
 		if (!is.number(at)) {
 			warning(
-				true,
-				'use-enhanced-state',
-				'useListState',
-				'insert',
-				'at should be a number.',
+				false,
+				[
+					'use-enhanced-state',
+					'useListState',
+					'insert',
+					'at should be a number.',
+				].join('\n'),
 			);
 		}
 
@@ -43,11 +45,13 @@ export function useListState(initialState = []) {
 		if (is.defined(at)) {
 			if (!is.number(at)) {
 				warning(
-					true,
-					'use-enhanced-state',
-					'useListState',
-					'find',
-					'at should be a number.',
+					false,
+					[
+						'use-enhanced-state',
+						'useListState',
+						'find',
+						'at should be a number.',
+					].join('\n'),
 				);
 				return undefined;
 			}
@@ -66,11 +70,13 @@ export function useListState(initialState = []) {
 		if (is.defined(at)) {
 			if (!is.number(at)) {
 				warning(
-					true,
-					'use-enhanced-state',
-					'useListState',
-					'remove',
-					'at should be a number.',
+					false,
+					[
+						'use-enhanced-state',
+						'useListState',
+						'remove',
+						'at should be a number.',
+					].join('\n'),
 				);
 				return undefined;
 			}
@@ -94,20 +100,26 @@ export function useListState(initialState = []) {
 	const move = (from, to) => {
 		if (!is.number(from)) {
 			warning(
-				true,
-				'use-enhanced-state',
-				'useListState',
-				'from must be an index number value',
+				false,
+				[
+					'use-enhanced-state',
+					'useListState',
+					'move',
+					'from must be an index number value',
+				].join('\n'),
 			);
 			return;
 		}
 
 		if (!is.number(to)) {
 			warning(
-				true,
-				'use-enhanced-state',
-				'useListState',
-				'to must be an index number value',
+				false,
+				[
+					'use-enhanced-state',
+					'useListState',
+					'move',
+					'to must be an index number value',
+				].join('\n'),
 			);
 			return;
 		}
