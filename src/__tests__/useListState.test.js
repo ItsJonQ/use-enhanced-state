@@ -22,6 +22,9 @@ describe('useListState', () => {
 					>
 						remove
 					</button>
+					<button onClick={() => data.remove({ id: 3 })}>
+						removeId
+					</button>
 					<button onClick={() => data.append({ id: 'append' })}>
 						append
 					</button>
@@ -42,9 +45,26 @@ describe('useListState', () => {
 					<button onClick={() => data.setState([{ id: 1 }])}>
 						setState
 					</button>
+					<button
+						onClick={() => data.removeOne((item) => item.id === 1)}
+					>
+						removeOne
+					</button>
+					<button
+						onClick={() =>
+							data.removeAll(
+								(item) => typeof item.id === 'number',
+							)
+						}
+					>
+						removeAll
+					</button>
 					<div>{data.has({ id: 1 }) ? 'has' : 'no'}</div>
 					<div>{data.find({ id: 1 }) ? 'find' : 'no'}</div>
 					<div>{data.get({ at: 1 }) ? 'get' : 'no'}</div>
+					<div>{data.indexOf({ id: 1 }) ? '1' : '0'}</div>
+					<div>{data.find({ id: 100 }) ? 'yes' : 'no'}</div>
+					<div>{data.find({}) ? 'yes' : 'no'}</div>
 					<ul>
 						{state.map((item) => (
 							<li key={item.id}>{item.id}</li>
@@ -68,6 +88,9 @@ describe('useListState', () => {
 		const get = getByText('get');
 		const set = getByText('set');
 		const setState = getByText('setState');
+		const removeOne = getByText('removeOne');
+		const removeAll = getByText('removeAll');
+		const removeId = getByText('removeId');
 
 		// get
 		expect(get).toBeTruthy();
@@ -135,5 +158,37 @@ describe('useListState', () => {
 		// setState
 		fireEvent.click(setState);
 		expect(list.children).toHaveLength(1);
+
+		/**
+		 * Repopulate data
+		 */
+		fireEvent.click(add);
+		fireEvent.click(add);
+		fireEvent.click(add);
+		fireEvent.click(add);
+		expect(list.children).toHaveLength(5);
+
+		// removeOne
+		fireEvent.click(removeOne);
+		expect(list.children).toHaveLength(4);
+		expect(list.innerHTML).not.toContain('1');
+
+		// removeAll
+		fireEvent.click(removeAll);
+		expect(list.children).toHaveLength(0);
+
+		/**
+		 * Repopulate data
+		 */
+		fireEvent.click(add);
+		fireEvent.click(add);
+		fireEvent.click(add);
+		fireEvent.click(add);
+		fireEvent.click(add);
+		expect(list.children).toHaveLength(5);
+
+		// remove (based on ID)
+		fireEvent.click(removeId);
+		expect(list.children).toHaveLength(4);
 	});
 });

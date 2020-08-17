@@ -77,14 +77,14 @@ type ListStateData<T> = {
 	 */
 	remove: ({ at, id }: { at?: number; id?: any }) => void;
 	/**
-	 * Removes all items from the Array state, based on a filter.
+	 * Removes all items from the Array state, based on a filter match.
 	 *
 	 * @example
 	 * data.removeAll((item) => item.value > 50)
 	 */
 	removeAll: (filter: ListFilter<T>) => void;
 	/**
-	 * Removes an item from the Array state, based on a filter.
+	 * Removes an item from the Array state, based on a filter match.
 	 *
 	 * @example
 	 * data.removeOne((item) => item.id === 'a')
@@ -127,6 +127,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 	);
 
 	const [state, setState] = useState(
+		/* istanbul ignore next */
 		is.array(initialState) ? (initialState as T[]) : [],
 	);
 
@@ -134,6 +135,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 	const append = (next) => setState((prev) => [...prev, next]);
 
 	const insert = ({ at, item }) => {
+		/* istanbul ignore if */
 		if (!is.number(at)) {
 			warning(
 				false,
@@ -154,6 +156,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 	};
 
 	const find = ({ at, id }) => {
+		/* istanbul ignore if */
 		if (is.defined(at)) {
 			if (!is.number(at)) {
 				warning(
@@ -171,6 +174,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 			return state.find((item, index) => index === at);
 		}
 
+		/* istanbul ignore else */
 		if (is.defined(id)) {
 			// @ts-ignore
 			return state.find((item) => item?.id === id);
@@ -189,6 +193,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 	};
 
 	const move = (from, to) => {
+		/* istanbul ignore if */
 		if (!is.number(from)) {
 			warning(
 				false,
@@ -202,6 +207,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 			return;
 		}
 
+		/* istanbul ignore if */
 		if (!is.number(to)) {
 			warning(
 				false,
@@ -221,7 +227,9 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 	};
 
 	const remove = ({ at, id }) => {
+		/* istanbul ignore else */
 		if (is.defined(at)) {
+			/* istanbul ignore if */
 			if (!is.number(at)) {
 				warning(
 					false,
@@ -240,6 +248,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 			});
 		}
 
+		/* istanbul ignore else */
 		if (is.defined(id)) {
 			return setState((prev) => {
 				// @ts-ignore
@@ -247,6 +256,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 			});
 		}
 
+		/* istanbul ignore next */
 		return undefined;
 	};
 
@@ -256,14 +266,15 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 			prev.filter((item, index) => {
 				if (!found) {
 					found = !!filter(item, index);
-					return true;
+					return false;
 				}
-				return false;
+				return true;
 			}),
 		);
 	};
 
-	const removeAll = (filter) => setState((prev) => prev.filter(filter));
+	const removeAll = (filter) =>
+		setState((prev) => prev.filter((item, index) => !filter(item, index)));
 
 	const data = {
 		add: append,

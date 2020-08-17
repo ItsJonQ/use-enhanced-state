@@ -106,6 +106,16 @@ const [items, itemsData] = useListState([...]);
 itemsData.has({ id: 'a' });
 ```
 
+##### `.indexOf({ id: any })`
+
+Checks an index of an item based on an id.
+
+```js
+const [items, itemsData] = useListState([...]);
+
+itemsData.indexOf({ id: 'a' });
+```
+
 ##### `.insert({ at: number, item: any })`
 
 Adds new data an a specific index.
@@ -146,9 +156,9 @@ const [items, itemsData] = useListState([...]);
 itemsData.remove({ id: 'a' });
 ```
 
-##### `.removeOne({ at: number, id: any })`
+##### `.removeOne((item: any, index: number) => boolean)`
 
-Removes an item from the array based on a filter.
+Removes an item from the array based on a filter match.
 
 ```js
 const [items, itemsData] = useListState([...]);
@@ -156,9 +166,9 @@ const [items, itemsData] = useListState([...]);
 itemsData.removeOne((item) => item.id === 'a');
 ```
 
-##### `.removeWhere({ at: number, id: any })`
+##### `.removeWhere((item: any, index: number) => boolean)`
 
-Removes all items from the array based on a filter.
+Removes all items from the array based on a filter match.
 
 ```js
 const [items, itemsData] = useListState([...]);
