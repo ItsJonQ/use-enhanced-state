@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"allowJs": false,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": "src",
+		"declaration": true,
+		"downlevelIteration": true,
+		"experimentalDecorators": true,
+		"forceConsistentCasingInFileNames": true,
+		"jsx": "react",
+		"lib": ["dom"],
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"noImplicitAny": false,
+		"noImplicitReturns": true,
+		"noImplicitThis": false,
+		"noUnusedLocals": false,
+		"outDir": "dist/types",
+		"rootDirs": ["src"],
+		"strictNullChecks": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"target": "esnext"
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules"]
+}

@@ -5,7 +5,21 @@
 
 import { useState } from 'react';
 
-export function useLocalState(key, initialValue) {
+type LocalStateHook<S> = [S, (value: S) => void];
+
+/**
+ * A enhanced hook for managing state that is saved/retrieved from localStorage.
+ *
+ * @param {string} key A namespace to save the state to localStorage.
+ * @param {any} initialValue An initial state value.
+ *
+ * @example
+ * const [config, setConfig] = useLocalState('config', { ... });
+ */
+export function useLocalState<S>(
+	key: string,
+	initialValue: S,
+): LocalStateHook<S> {
 	// State to store our value
 	// Pass initial state function to useState so logic is only executed once
 	const [storedValue, setStoredValue] = useState(() => {
