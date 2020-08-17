@@ -151,31 +151,24 @@ itemsFns.prepend({ id: 'a' });
 ##### `.remove({ at: number, id: any })`
 
 Removes an item from the array, given an index value (`at`) or an `id`.
+Alternatively, a filter match (`function`) can be provided.
 
 ```js
 const [items, itemsFns] = useListState([...]);
 
 itemsFns.remove({ id: 'a' });
+// or
+itemsFns.remove((item) => item.id === 'a');
 ```
 
-##### `.removeOne((item: any, index: number) => boolean)`
-
-Removes an item from the array based on a filter match.
-
-```js
-const [items, itemsFns] = useListState([...]);
-
-itemsFns.removeOne((item) => item.id === 'a');
-```
-
-##### `.removeWhere((item: any, index: number) => boolean)`
+##### `.removeAll((item: any, index: number) => boolean)`
 
 Removes all items from the array based on a filter match.
 
 ```js
 const [items, itemsFns] = useListState([...]);
 
-itemsFns.removeWhere((item) => item.value > 50);
+itemsFns.removeAll((item) => item.value > 50);
 ```
 
 ##### `.set(Array | Function)`

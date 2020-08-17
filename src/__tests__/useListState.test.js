@@ -50,9 +50,7 @@ describe('useListState', () => {
 						setState
 					</button>
 					<button
-						onClick={() =>
-							stateFns.removeOne((item) => item.id === 1)
-						}
+						onClick={() => stateFns.remove((item) => item.id === 1)}
 					>
 						removeOne
 					</button>

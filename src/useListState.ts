@@ -70,12 +70,15 @@ type ListStateMethods<T> = {
 	 */
 	prepend: (next: T) => void;
 	/**
-	 * Removes an item from the Array state.
+	 * Removes an item from the Array state. Item can be removed by matching
+	 * an index (at) or an id. Alternatively, a filter match (function) can
+	 * be provided.
 	 *
 	 * @example
 	 * stateFns.remove({ id: 'a' })
+	 * stateFns.remove(item) => item.id === 'a')
 	 */
-	remove: ({ at, id }: { at?: number; id?: any }) => void;
+	remove: (props: { at?: number; id?: any } | ListFilter<T>) => void;
 	/**
 	 * Removes all items from the Array state, based on a filter match.
 	 *
@@ -83,13 +86,6 @@ type ListStateMethods<T> = {
 	 * stateFns.removeAll((item) => item.value > 50)
 	 */
 	removeAll: (filter: ListFilter<T>) => void;
-	/**
-	 * Removes an item from the Array state, based on a filter match.
-	 *
-	 * @example
-	 * stateFns.removeOne((item) => item.id === 'a')
-	 */
-	removeOne: (filter: ListFilter<T>) => void;
 	/**
 	 * Sets the state.
 	 *
@@ -226,7 +222,37 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 		});
 	};
 
-	const remove = ({ at, id }) => {
+	const remove = (arg) => {
+		/* istanbul ignore if */
+		if (!is.function(arg) && !is.plainObject(arg)) {
+			warning(
+				false,
+				[
+					'use-enhanced-state',
+					'useListState',
+					'remove',
+					'argument should be either a function or props (Object).',
+				].join('\n'),
+			);
+
+			return;
+		}
+
+		if (is.function(arg)) {
+			let found = false;
+			return setState((prev) =>
+				prev.filter((item, index) => {
+					if (!found) {
+						found = !!arg(item, index);
+						return false;
+					}
+					return true;
+				}),
+			);
+		}
+
+		const { at, id } = arg;
+
 		/* istanbul ignore else */
 		if (is.defined(at)) {
 			/* istanbul ignore if */
@@ -260,19 +286,6 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 		return undefined;
 	};
 
-	const removeOne = (filter) => {
-		let found = false;
-		return setState((prev) =>
-			prev.filter((item, index) => {
-				if (!found) {
-					found = !!filter(item, index);
-					return false;
-				}
-				return true;
-			}),
-		);
-	};
-
 	const removeAll = (filter) =>
 		setState((prev) => prev.filter((item, index) => !filter(item, index)));
 
@@ -288,7 +301,6 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 		prepend,
 		remove,
 		removeAll,
-		removeOne,
 		set: setState,
 		setState,
 	};
