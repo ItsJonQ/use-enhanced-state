@@ -96,14 +96,14 @@ type ListStateMethods<T> = {
 	 * @example
 	 * stateFns.set([{ id: 'a' }])
 	 */
-	set: React.Dispatch<React.SetStateAction<unknown[]>>;
+	set: React.Dispatch<React.SetStateAction<T[]>>;
 	/**
 	 * Sets the state.
 	 *
 	 * @example
 	 * stateFns.set([{ id: 'a' }])
 	 */
-	setState: React.Dispatch<React.SetStateAction<unknown[]>>;
+	setState: React.Dispatch<React.SetStateAction<T[]>>;
 };
 
 type ListStateHook<T> = [Array<T>, ListStateMethods<T>];
