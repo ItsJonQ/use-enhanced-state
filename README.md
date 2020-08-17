@@ -1,8 +1,9 @@
 # 🔄 use-enhanced-state
 
-[![npm version](https://badge.fury.io/js/use-enhanced-state.svg)](https://badge.fury.io/js/use-enhanced-state)
 [![Build Status](https://travis-ci.org/ItsJonQ/use-enhanced-state.svg?branch=master)](https://travis-ci.org/ItsJonQ/use-enhanced-state)
 [![codecov](https://codecov.io/gh/ItsJonQ/use-enhanced-state/branch/master/graph/badge.svg)](https://codecov.io/gh/ItsJonQ/use-enhanced-state)
+[![Bundle size](https://badgen.net/bundlephobia/minzip/@itsjonq/is)](https://bundlephobia.com/result?p=@itsjonq/is)
+[![npm version](https://badge.fury.io/js/use-enhanced-state.svg)](https://badge.fury.io/js/use-enhanced-state)
 
 > A collection of enhanced useState hooks for React.
 
