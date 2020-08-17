@@ -146,6 +146,26 @@ const [items, itemsData] = useListState([...]);
 itemsData.remove({ id: 'a' });
 ```
 
+##### `.removeOne({ at: number, id: any })`
+
+Removes an item from the array based on a filter.
+
+```js
+const [items, itemsData] = useListState([...]);
+
+itemsData.removeOne((item) => item.id === 'a');
+```
+
+##### `.removeWhere({ at: number, id: any })`
+
+Removes all items from the array based on a filter.
+
+```js
+const [items, itemsData] = useListState([...]);
+
+itemsData.removeWhere((item) => item.value > 50);
+```
+
 ##### `.set(Array | Function)`
 
 _Alias: `.setState()`_
