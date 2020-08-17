@@ -6,7 +6,7 @@ import { useListState } from '../useListState';
 describe('useListState', () => {
 	test('should adjust array state based on provided data methods', () => {
 		const Component = () => {
-			const [state, data] = useListState([
+			const [state, stateFns] = useListState([
 				{ id: 1 },
 				{ id: 2 },
 				{ id: 3 },
@@ -14,57 +14,63 @@ describe('useListState', () => {
 
 			return (
 				<div>
-					<button onClick={() => data.add({ id: state.length + 1 })}>
+					<button
+						onClick={() => stateFns.add({ id: state.length + 1 })}
+					>
 						add
 					</button>
 					<button
-						onClick={() => data.remove({ at: state.length - 1 })}
+						onClick={() =>
+							stateFns.remove({ at: state.length - 1 })
+						}
 					>
 						remove
 					</button>
-					<button onClick={() => data.remove({ id: 3 })}>
+					<button onClick={() => stateFns.remove({ id: 3 })}>
 						removeId
 					</button>
-					<button onClick={() => data.append({ id: 'append' })}>
+					<button onClick={() => stateFns.append({ id: 'append' })}>
 						append
 					</button>
-					<button onClick={() => data.prepend({ id: 'prepend' })}>
+					<button onClick={() => stateFns.prepend({ id: 'prepend' })}>
 						prepend
 					</button>
-					<button onClick={() => data.move(state.length - 1, 0)}>
+					<button onClick={() => stateFns.move(state.length - 1, 0)}>
 						move
 					</button>
 					<button
 						onClick={() =>
-							data.insert({ at: 2, item: { id: 'insert' } })
+							stateFns.insert({ at: 2, item: { id: 'insert' } })
 						}
 					>
 						insert
 					</button>
-					<button onClick={() => data.set([])}>set</button>
-					<button onClick={() => data.setState([{ id: 1 }])}>
+					<button onClick={() => stateFns.set([])}>set</button>
+					<button onClick={() => stateFns.setState([{ id: 1 }])}>
 						setState
 					</button>
 					<button
-						onClick={() => data.removeOne((item) => item.id === 1)}
+						onClick={() =>
+							stateFns.removeOne((item) => item.id === 1)
+						}
 					>
 						removeOne
 					</button>
 					<button
 						onClick={() =>
-							data.removeAll(
+							stateFns.removeAll(
 								(item) => typeof item.id === 'number',
 							)
 						}
 					>
 						removeAll
 					</button>
-					<div>{data.has({ id: 1 }) ? 'has' : 'no'}</div>
-					<div>{data.find({ id: 1 }) ? 'find' : 'no'}</div>
-					<div>{data.get({ at: 1 }) ? 'get' : 'no'}</div>
-					<div>{data.indexOf({ id: 1 }) ? '1' : '0'}</div>
-					<div>{data.find({ id: 100 }) ? 'yes' : 'no'}</div>
-					<div>{data.find({}) ? 'yes' : 'no'}</div>
+					<div>{stateFns.has({ id: 1 }) ? 'has' : 'no'}</div>
+					<div>{stateFns.find({ id: 1 }) ? 'find' : 'no'}</div>
+					<div>{stateFns.get({ at: 1 }) ? 'get' : 'no'}</div>
+					<div>{stateFns.indexOf({ id: 1 }) ? '1' : '0'}</div>
+					<div>{stateFns.find({ id: 100 }) ? 'yes' : 'no'}</div>
+					<div>{stateFns.find({}) ? 'yes' : 'no'}</div>
 					<ul>
 						{state.map((item) => (
 							<li key={item.id}>{item.id}</li>

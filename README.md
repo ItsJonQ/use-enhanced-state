@@ -55,7 +55,7 @@ import React from 'react';
 import { useListState } from 'use-enhanced-state';
 
 const ListComponent = () => {
-	const [items, itemsData] = useListState([{ id: 1 }, { id: 2 }]);
+	const [items, itemsFns] = useListState([{ id: 1 }, { id: 2 }]);
 
 	return (
 		<ul>
@@ -78,9 +78,9 @@ _Alias: `.append()`_
 Adds a new item to the array (at the end).
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.add({ id: 'a' });
+itemsFns.add({ id: 'a' });
 ```
 
 ##### `.find({ at: number, id: any })`
@@ -90,10 +90,10 @@ _Alias: `.get()`_
 Finds an item from the array, using either an index value (`at`) or an `id`.
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.find({ id: 'a' });
-itemsData.find({ at: 9 });
+itemsFns.find({ id: 'a' });
+itemsFns.find({ at: 9 });
 ```
 
 ##### `.has({ at: number, id: any })`
@@ -101,9 +101,9 @@ itemsData.find({ at: 9 });
 Checks to see if the array contains an item.
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.has({ id: 'a' });
+itemsFns.has({ id: 'a' });
 ```
 
 ##### `.indexOf({ id: any })`
@@ -111,9 +111,9 @@ itemsData.has({ id: 'a' });
 Checks an index of an item based on an id.
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.indexOf({ id: 'a' });
+itemsFns.indexOf({ id: 'a' });
 ```
 
 ##### `.insert({ at: number, item: any })`
@@ -121,9 +121,9 @@ itemsData.indexOf({ id: 'a' });
 Adds new data an a specific index.
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.insert({at: 3, item: { id: 'a' }});
+itemsFns.insert({at: 3, item: { id: 'a' }});
 ```
 
 ##### `.move(source: number, destination: number)`
@@ -131,9 +131,9 @@ itemsData.insert({at: 3, item: { id: 'a' }});
 Moves an item from a previous index (`source`) to a new index (`destination`).
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.move(3, 5);
+itemsFns.move(3, 5);
 ```
 
 ##### `.prepend(data)`
@@ -141,9 +141,9 @@ itemsData.move(3, 5);
 Adds a new item to the array (at the start).
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.prepend({ id: 'a' });
+itemsFns.prepend({ id: 'a' });
 ```
 
 ##### `.remove({ at: number, id: any })`
@@ -151,9 +151,9 @@ itemsData.prepend({ id: 'a' });
 Removes an item from the array, given an index value (`at`) or an `id`.
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.remove({ id: 'a' });
+itemsFns.remove({ id: 'a' });
 ```
 
 ##### `.removeOne((item: any, index: number) => boolean)`
@@ -161,9 +161,9 @@ itemsData.remove({ id: 'a' });
 Removes an item from the array based on a filter match.
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.removeOne((item) => item.id === 'a');
+itemsFns.removeOne((item) => item.id === 'a');
 ```
 
 ##### `.removeWhere((item: any, index: number) => boolean)`
@@ -171,9 +171,9 @@ itemsData.removeOne((item) => item.id === 'a');
 Removes all items from the array based on a filter match.
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.removeWhere((item) => item.value > 50);
+itemsFns.removeWhere((item) => item.value > 50);
 ```
 
 ##### `.set(Array | Function)`
@@ -183,9 +183,9 @@ _Alias: `.setState()`_
 The original React `setState` callback from `useState`.
 
 ```js
-const [items, itemsData] = useListState([...]);
+const [items, itemsFns] = useListState([...]);
 
-itemsData.set([{ id: 'a' }]);
+itemsFns.set([{ id: 'a' }]);
 ```
 
 ### useBoolState
@@ -214,9 +214,9 @@ _Alias: `.truthy()`_
 Sets the value to `true`.
 
 ```js
-const [value, valueData] = useBoolState(false);
+const [value, valueFns] = useBoolState(false);
 
-valueData.true();
+valueFns.true();
 ```
 
 ##### `.false()`
@@ -226,9 +226,9 @@ _Alias: `.falsy()`_
 Sets the value to `false`.
 
 ```js
-const [value, valueData] = useBoolState(true);
+const [value, valueFns] = useBoolState(true);
 
-valueData.false();
+valueFns.false();
 ```
 
 ##### `.toggle()`
@@ -236,9 +236,9 @@ valueData.false();
 Toggles the value between `true` and `false`.
 
 ```js
-const [value, valueData] = useBoolState(true);
+const [value, valueFns] = useBoolState(true);
 
-valueData.toggle();
+valueFns.toggle();
 ```
 
 ##### `.set(Array | Function)`
@@ -248,9 +248,9 @@ _Alias: `.setState()`_
 The original React `setState` callback from `useState`.
 
 ```js
-const [value, valueData] = useBoolState(false);
+const [value, valueFns] = useBoolState(false);
 
-valueData.set(true);
+valueFns.set(true);
 ```
 
 ### useLocalState

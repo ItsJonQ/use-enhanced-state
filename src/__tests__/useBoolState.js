@@ -6,20 +6,20 @@ import { useBoolState } from '../useBoolState';
 describe('useBoolState', () => {
 	test('should adjust array state based on provided data methods', () => {
 		const Component = () => {
-			const [state, data] = useBoolState(false);
+			const [state, stateFns] = useBoolState(false);
 
 			return (
 				<div>
-					<button onClick={() => data.true()}>true</button>
-					<button onClick={() => data.false()}>false</button>
-					<button onClick={() => data.truthy()}>truthy</button>
-					<button onClick={() => data.falsy()}>falsy</button>
-					<button onClick={() => data.toggle()}>toggle</button>
-					<button onClick={() => data.set(true)}>set</button>
-					<button onClick={() => data.setState(false)}>
+					<button onClick={() => stateFns.true()}>true</button>
+					<button onClick={() => stateFns.false()}>false</button>
+					<button onClick={() => stateFns.truthy()}>truthy</button>
+					<button onClick={() => stateFns.falsy()}>falsy</button>
+					<button onClick={() => stateFns.toggle()}>toggle</button>
+					<button onClick={() => stateFns.set(true)}>set</button>
+					<button onClick={() => stateFns.setState(false)}>
 						setState
 					</button>
-					<div>get: {data.get() ? 'true' : 'false'}</div>
+					<div>get: {stateFns.get() ? 'true' : 'false'}</div>
 					<div>state: {state ? 'true' : 'false'}</div>
 				</div>
 			);

@@ -2,7 +2,7 @@ import { is } from '@itsjonq/is';
 import { useState } from 'react';
 import warning from 'tiny-warning';
 
-type BoolStateData = {
+type BoolStateMethods = {
 	/**
 	 * Sets the state to false.
 	 */
@@ -37,7 +37,7 @@ type BoolStateData = {
 	truthy: () => void;
 };
 
-type BoolStateHook = [boolean, BoolStateData];
+type BoolStateHook = [boolean, BoolStateMethods];
 
 /**
  * A enhanced hook for managing boolean states.
@@ -45,9 +45,9 @@ type BoolStateHook = [boolean, BoolStateData];
  * @param {boolean} initialValue An initial state value.
  *
  * @example
- * const [state, data] = useBoolState(false);
+ * const [state, stateFns] = useBoolState(false);
  * ...
- * data.toggle(); // Toggles the state.
+ * stateFns.toggle(); // Toggles the state.
  */
 export function useBoolState(initialState?: boolean): BoolStateHook {
 	warning(
@@ -65,7 +65,7 @@ export function useBoolState(initialState?: boolean): BoolStateHook {
 
 	const get = () => state;
 
-	const data = {
+	const methods = {
 		false: falsy,
 		falsy,
 		get,
@@ -76,5 +76,5 @@ export function useBoolState(initialState?: boolean): BoolStateHook {
 		truthy,
 	};
 
-	return [state, data];
+	return [state, methods];
 }

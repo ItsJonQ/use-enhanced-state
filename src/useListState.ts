@@ -4,54 +4,54 @@ import { useState } from 'react';
 import warning from 'tiny-warning';
 
 type ListFilter<T> = (item: T, index: number) => boolean;
-type ListStateData<T> = {
+type ListStateMethods<T> = {
 	/**
 	 * Adds a new item (to the end) to the Array state.
 	 *
 	 * @example
-	 * data.add({ id: 'a', ...})
+	 * stateFns.add({ id: 'a', ...})
 	 */
 	add: (next: T) => void;
 	/**
 	 * Adds a new item to the end of the Array state.
 	 *
 	 * @example
-	 * data.add({ id: 'a', ...})
+	 * stateFns.add({ id: 'a', ...})
 	 */
 	append: (next: T) => void;
 	/**
 	 * Retrieves an item from the Array state.
 	 *
 	 * @example
-	 * data.find({ id: 'a' })
+	 * stateFns.find({ id: 'a' })
 	 */
 	find: ({ at, id }: { at?: number; id?: any }) => any;
 	/**
 	 * Retrieves an item from the Array state.
 	 *
 	 * @example
-	 * data.find({ id: 'a' })
+	 * stateFns.find({ id: 'a' })
 	 */
 	get: ({ at, id }: { at?: number; id?: any }) => any;
 	/**
 	 * Checks to see if the Array state contains an item.
 	 *
 	 * @example
-	 * data.has({ id: 'a' })
+	 * stateFns.has({ id: 'a' })
 	 */
 	has: ({ id }: { id?: any }) => boolean;
 	/**
 	 * Checks the index of an item.
 	 *
 	 * @example
-	 * data.indexOf({ id: 'a' })
+	 * stateFns.indexOf({ id: 'a' })
 	 */
 	indexOf: ({ id }: { id?: any }) => number | undefined;
 	/**
 	 * Adds a new item to a specific index of the Array state.
 	 *
 	 * @example
-	 * data.insert({ at: 3, item: {...} })
+	 * stateFns.insert({ at: 3, item: {...} })
 	 */
 	insert: ({ at, item }: { at?: number; item: T }) => void;
 	/**
@@ -59,54 +59,54 @@ type ListStateData<T> = {
 	 * (from) index to the next (to) index.
 	 *
 	 * @example
-	 * data.move(1, 3)
+	 * stateFns.move(1, 3)
 	 */
 	move: (from: number, to: number) => void;
 	/**
 	 * Adds a new item to the beginning of the Array state.
 	 *
 	 * @example
-	 * data.add({ id: 'a', ...})
+	 * stateFns.add({ id: 'a', ...})
 	 */
 	prepend: (next: T) => void;
 	/**
 	 * Removes an item from the Array state.
 	 *
 	 * @example
-	 * data.remove({ id: 'a' })
+	 * stateFns.remove({ id: 'a' })
 	 */
 	remove: ({ at, id }: { at?: number; id?: any }) => void;
 	/**
 	 * Removes all items from the Array state, based on a filter match.
 	 *
 	 * @example
-	 * data.removeAll((item) => item.value > 50)
+	 * stateFns.removeAll((item) => item.value > 50)
 	 */
 	removeAll: (filter: ListFilter<T>) => void;
 	/**
 	 * Removes an item from the Array state, based on a filter match.
 	 *
 	 * @example
-	 * data.removeOne((item) => item.id === 'a')
+	 * stateFns.removeOne((item) => item.id === 'a')
 	 */
 	removeOne: (filter: ListFilter<T>) => void;
 	/**
 	 * Sets the state.
 	 *
 	 * @example
-	 * data.set([{ id: 'a' }])
+	 * stateFns.set([{ id: 'a' }])
 	 */
 	set: React.Dispatch<React.SetStateAction<unknown[]>>;
 	/**
 	 * Sets the state.
 	 *
 	 * @example
-	 * data.set([{ id: 'a' }])
+	 * stateFns.set([{ id: 'a' }])
 	 */
 	setState: React.Dispatch<React.SetStateAction<unknown[]>>;
 };
 
-type ListStateHook<T> = [Array<T>, ListStateData<T>];
+type ListStateHook<T> = [Array<T>, ListStateMethods<T>];
 
 /**
  * A enhanced hook for managing flat Array states.
@@ -114,9 +114,9 @@ type ListStateHook<T> = [Array<T>, ListStateData<T>];
  * @param {Array<any>} initialValue An initial state value.
  *
  * @example
- * const [state, data] = useListState([...]);
+ * const [state, stateFns] = useListState([...]);
  * ...
- * data.move(1, 5); // Moves an item from index of 1 to 5.
+ * stateFns.move(1, 5); // Moves an item from index of 1 to 5.
  */
 export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 	warning(
@@ -276,7 +276,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 	const removeAll = (filter) =>
 		setState((prev) => prev.filter((item, index) => !filter(item, index)));
 
-	const data = {
+	const methods = {
 		add: append,
 		append,
 		find,
@@ -293,5 +293,5 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 		setState,
 	};
 
-	return [state, data];
+	return [state, methods];
 }
