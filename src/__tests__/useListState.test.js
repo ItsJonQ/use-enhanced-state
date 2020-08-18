@@ -63,15 +63,27 @@ describe('useListState', () => {
 					>
 						removeAll
 					</button>
+					<button
+						onClick={() =>
+							stateFns.update({ id: 1, title: 'update' })
+						}
+					>
+						update
+					</button>
 					<div>{stateFns.has({ id: 1 }) ? 'has' : 'no'}</div>
 					<div>{stateFns.find({ id: 1 }) ? 'find' : 'no'}</div>
 					<div>{stateFns.get({ at: 1 }) ? 'get' : 'no'}</div>
 					<div>{stateFns.indexOf({ id: 1 }) ? '1' : '0'}</div>
 					<div>{stateFns.find({ id: 100 }) ? 'yes' : 'no'}</div>
 					<div>{stateFns.find({}) ? 'yes' : 'no'}</div>
+					<div>
+						{stateFns.update({ id: 'nooooope' }) ? 'yes' : 'no'}
+					</div>
 					<ul>
 						{state.map((item) => (
-							<li key={item.id}>{item.id}</li>
+							<li key={item.id}>
+								{item.id}:{item.title}
+							</li>
 						))}
 					</ul>
 				</div>
@@ -95,6 +107,7 @@ describe('useListState', () => {
 		const removeOne = getByText('removeOne');
 		const removeAll = getByText('removeAll');
 		const removeId = getByText('removeId');
+		const update = getByText('update');
 
 		// get
 		expect(get).toBeTruthy();
@@ -194,5 +207,9 @@ describe('useListState', () => {
 		// remove (based on ID)
 		fireEvent.click(removeId);
 		expect(list.children).toHaveLength(4);
+
+		// update
+		fireEvent.click(update);
+		expect(list.children[0].innerHTML).toContain('update');
 	});
 });

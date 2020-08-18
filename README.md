@@ -183,6 +183,16 @@ const [items, itemsFns] = useListState([...]);
 itemsFns.set([{ id: 'a' }]);
 ```
 
+##### `.update(Object)`
+
+Updating an item based on an `id` match.
+
+```js
+const [items, itemsFns] = useListState([...]);
+
+itemsFns.update({ id: 'a', title: 'b' });
+```
+
 ### useBoolState
 
 Used for a `boolean` state.

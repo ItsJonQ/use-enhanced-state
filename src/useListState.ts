@@ -100,6 +100,13 @@ type ListStateMethods<T> = {
 	 * stateFns.set([{ id: 'a' }])
 	 */
 	setState: React.Dispatch<React.SetStateAction<T[]>>;
+	/**
+	 * Update an item, based on an id match.
+	 *
+	 * @example
+	 * stateFns.update({ id: 'a', title 'b'})
+	 */
+	update: (props: any) => void;
 };
 
 type ListStateHook<T> = [Array<T>, ListStateMethods<T>];
@@ -289,6 +296,22 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 	const removeAll = (filter) =>
 		setState((prev) => prev.filter((item, index) => !filter(item, index)));
 
+	const update = ({ id, ...rest }) => {
+		// @ts-ignore
+		const item = find({ id });
+		if (item) {
+			return setState((prev) =>
+				prev.map((item) => {
+					// @ts-ignore
+					if (item?.id === id) {
+						return { ...item, ...rest };
+					}
+					return item;
+				}),
+			);
+		}
+	};
+
 	const methods = {
 		add: append,
 		append,
@@ -303,6 +326,7 @@ export function useListState<T>(initialState?: T[]): ListStateHook<T> {
 		removeAll,
 		set: setState,
 		setState,
+		update,
 	};
 
 	return [state, methods];
