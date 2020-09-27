@@ -1,5 +1,5 @@
 import { is } from '@itsjonq/is';
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import warning from 'tiny-warning';
 
 type BoolStateMethods = {
@@ -11,10 +11,6 @@ type BoolStateMethods = {
 	 * Sets the state to false.
 	 */
 	falsy: () => void;
-	/**
-	 * Retrieves the state.
-	 */
-	get: () => boolean;
 	/**
 	 * Sets the state.
 	 */
@@ -59,22 +55,22 @@ export function useBoolState(initialState?: boolean): BoolStateHook {
 
 	const [state, setState] = useState(initialState || false);
 
-	const truthy = () => setState(true);
-	const falsy = () => setState(false);
-	const toggle = () => setState(!state);
+	const truthy = useCallback(() => setState(true), []);
+	const falsy = useCallback(() => setState(false), []);
+	const toggle = useCallback(() => setState((prev) => !prev), []);
 
-	const get = () => state;
-
-	const methods = {
-		false: falsy,
-		falsy,
-		get,
-		set: setState,
-		setState,
-		toggle,
-		true: truthy,
-		truthy,
-	};
+	const methods = useMemo(
+		() => ({
+			false: falsy,
+			falsy,
+			set: setState,
+			setState,
+			toggle,
+			true: truthy,
+			truthy,
+		}),
+		[],
+	);
 
 	return [state, methods];
 }

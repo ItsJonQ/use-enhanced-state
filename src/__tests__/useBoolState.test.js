@@ -19,7 +19,6 @@ describe('useBoolState', () => {
 					<button onClick={() => stateFns.setState(false)}>
 						setState
 					</button>
-					<div>get: {stateFns.get() ? 'true' : 'false'}</div>
 					<div>state: {state ? 'true' : 'false'}</div>
 				</div>
 			);

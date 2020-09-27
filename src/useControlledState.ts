@@ -1,5 +1,5 @@
 import { is } from '@itsjonq/is';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 type ControlledStateHook<S> = [S | undefined, (next: S) => void];
 
@@ -33,11 +33,14 @@ export function useControlledState<S>(
 	const [internalState, setInternalState] = useState(initial);
 	const hasCurrentState = is.defined(currentState);
 
-	const setState = (nextState) => {
-		if (!hasCurrentState) {
-			setInternalState(nextState);
-		}
-	};
+	const setState = useCallback(
+		(nextState) => {
+			if (!hasCurrentState) {
+				setInternalState(nextState);
+			}
+		},
+		[hasCurrentState],
+	);
 
 	const state = hasCurrentState ? currentState : internalState;
 
