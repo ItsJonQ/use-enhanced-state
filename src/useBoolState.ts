@@ -1,5 +1,5 @@
 import { is } from '@itsjonq/is';
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import warning from 'tiny-warning';
 
 type BoolStateMethods = {
@@ -69,7 +69,7 @@ export function useBoolState(initialState?: boolean): BoolStateHook {
 			true: truthy,
 			truthy,
 		}),
-		[],
+		[falsy, toggle, truthy],
 	);
 
 	return [state, methods];

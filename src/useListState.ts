@@ -1,5 +1,5 @@
 import { is } from '@itsjonq/is';
-import arrayMove from 'array-move';
+import { arrayMove } from './arrayMove';
 import { useState } from 'react';
 import warning from 'tiny-warning';
 
